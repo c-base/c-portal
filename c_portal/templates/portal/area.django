@@ -1,0 +1,75 @@
+{% extends "base.django" %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="span12">
+				{% include "mainnav.django" %}
+			</div>
+		</div>
+        <div class="row">
+            <div class="span12 extra-line-spacing">
+                {% for tag in tags %}
+                <a href="/tags/{{tag.name}}/" class="badge badge-inverse">{{tag.name}}</a>
+                {% endfor %}
+                <hr>
+            </div>
+        </div>
+		<div class="row">
+			<div class="span12">
+                <div class="well">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr><th>latest articles</th></tr>
+                        </thead>
+                        <tbody>
+                            {% for article in featured %}
+                            <tr>
+                                <td class="span3">
+                                    <a href="/articles/{{article.pk}}/">
+                                        <strong>
+                                            {{article.title}}
+                                        </strong>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="/articles/{{article.pk}}/">
+                                        {{article.abstract}}
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr><td>nothing much going on here... please come back soon!</td></tr>
+                            <hr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+			</div>
+		</div>
+
+        <div class="row">
+            <div class="span12">
+                <div class="well">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr><td>latest projects</td></tr>
+                        </thead>
+                        <tbody>
+                            {% for p in latest_projects %}
+                            <tr>
+                                <td class="span3">
+                                    <a href="/projects/{{p.name}}/">{{p.name}}</a>
+                                </td>
+                                <td>
+                                    <a href="/projects/{{p.name}}">{{p.abstract}}</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+	</div>
+{% endblock body %}

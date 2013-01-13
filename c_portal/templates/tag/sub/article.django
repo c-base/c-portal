@@ -1,0 +1,16 @@
+<table class="table table-condensed">
+    <thead>
+        <tr>
+            <td>articles</td>
+        </tr>
+    </thead>
+    {% for a in my_articles %}
+    <tr>
+        <td>
+            <a href="/articles/{{a.pk}}/">{{a.title}}</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td>no articles tagged with {{tag.name}}</td></tr>
+    {% endfor %}
+</table>

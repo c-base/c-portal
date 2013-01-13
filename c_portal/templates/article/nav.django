@@ -1,0 +1,51 @@
+{% if request.user.is_authenticated and request.user.username == article.author.nickname %}
+    <button class="btn btn-block btn-info {{featured}}"
+            data-toggle="button"
+            type="button"
+            id="FeaturedArticleButtonToggle"
+            data-article="{{article.pk}}"
+            data-member="{{article.author.nickname}}">
+        featured
+    </button>
+    <a class="btn btn-block btn-info" href="/articles/{{article.id}}/edit/">edit</a>
+    <button type="button"
+            class="btn btn-block btn-info"
+            data-toggle="modal"
+            data-target="#ArticleProjectModal"
+            data-article="{{article.pk}}">
+        stick to project
+    </button>
+    <br />
+    <button type="button"
+            class="btn btn-block btn-inverse"
+            data-toggle="modal"
+            data-target="#DeleteModal"
+            >
+        delete
+    </button>
+<hr />
+{% endif %}
+<ul class="nav nav-list">
+    <li class="nav-header">author</li>
+    <li><a href="/members/{{article.author}}/">{{article.author}}</a></li>
+
+    <li class="nav-header projectnav">project</li>
+    <li class="projectnav" data-project="{{article.project}}">
+        <a href="/projects/{{article.project }}/">{{article.project}}</a>
+    </li>
+</ul>
+
+<hr>
+{% if request.user.username == article.author.nickname %}
+<form class="form" method="post" action="/articles/{{article.id}}/add_tags/">
+    <div class="control-group">
+        <div class="controls">
+            <div class="input-prepend">
+                <span class="add-on" rel="tooltip" title="add tags"><i class="icon-tags"></i></span>
+                <input id="id_name" type="text" name="name" maxlength="64" placeholder="add tags"/>
+                {% csrf_token %}
+            </div>
+        </div>
+    </div>
+</form>
+{% endif %}

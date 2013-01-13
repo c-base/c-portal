@@ -1,0 +1,19 @@
+<table class="table table-condensed">
+    <thead>
+        <tr>
+            <td>projects</td>
+        </tr>
+    </thead>
+    {% for p in my_projects %}
+    <tr>
+        <td><a href="/projects/{{p.name}}/">{{p.name}}</a></td>
+        <td>
+            {% if p.is_member %}
+            aye
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td>no projects tagged with {{tag.name}}</td></tr>
+    {% endfor %}
+</table>

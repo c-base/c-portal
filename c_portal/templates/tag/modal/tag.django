@@ -1,0 +1,23 @@
+<div id="TagModal"
+        class="modal hide fade"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myModalLabel"
+        aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">create a new project</h3>
+    </div>
+    <div class="modal-body">
+        <form method="post" action="/projects/">{% csrf_token %}
+            {{ tag_form.as_p }}
+            <div class="pull-right">
+                <input type="submit" value="create" class="btn btn-primary" data-member="{{request.user.username}}">
+            </div>
+        </form>
+    </div>
+    <!-- div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">cancel</button>
+        <button class="btn btn-primary" data-article="{{article.pk}}">create</button>
+    </div -->
+</div>

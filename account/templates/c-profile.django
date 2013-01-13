@@ -1,0 +1,24 @@
+{% extends "base.django" %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            {% include "mainnav.django" %}
+            <div class="well">
+                <span class="badge badge-info"><strong>projects</strong></span>
+                <hr />
+            </div>
+            <div class="well">
+                <span class="badge badge-info"><strong>articles</strong></span>
+                <hr />
+            </div>
+            <!-- div class="well">
+                <strong>tags</strong>
+                <hr />
+                coming to a c-portal app near you, soon.
+            </div -->
+        </div>
+    </div>
+</div>
+{% endblock body%}

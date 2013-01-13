@@ -1,0 +1,14 @@
+<div id="AboutmeModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">edit aboutme</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form" method="post" action="/members/{{member.nickname}}/aboutme/">
+            {% csrf_token %}
+            {{aboutme_form.as_p}}
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <input type="submit" class="btn btn-primary" value="save aboutme">
+        </form>
+    </div>
+</div>

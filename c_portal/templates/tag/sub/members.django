@@ -1,0 +1,14 @@
+<table class="table table-condensed">
+    <thead>
+        <tr>
+            <th>members</th>
+        </tr>
+    </thead>
+    {% for m in my_members %}
+        <tr>
+            <td><a href="/members/{{m.nickname}}/" >{{m.nickname}}</a></td>
+        </tr>
+    {% empty %}
+        <tr><td>no members tagged with {{tag.name}}</td></tr>
+    {% endfor %}
+</table>

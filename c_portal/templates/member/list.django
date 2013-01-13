@@ -1,0 +1,34 @@
+{% extends "base.django" %}
+
+
+{% block body%}
+
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            {% include "mainnav.django" %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <h1>available members</h1>
+            <hr />
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        {% for member in members %}
+                        <li>
+                            <a href="/members/{{member}}/">{{member}}</a>
+                        </li>
+                        {% empty %}
+                        no members so far...
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body%}
+

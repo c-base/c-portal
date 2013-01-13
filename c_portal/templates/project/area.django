@@ -1,0 +1,48 @@
+{% extends "base.django" %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="span12">
+				{% include "mainnav.django" %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="span3">
+                {% include "project/nav.django" %}
+			</div>
+			<div class="span9">
+				<h1>{{project.name}}</h1>
+				{% for tag in my_tags %}
+                <span class="badge badge-inverse">
+                    <a href="/tags/{{tag.name}}/">{{tag.name}}</a>
+                    {% if is_project_member %}
+                        |<a href="/projects/{{project.name}}/untag/{{tag.name}}/">x</a>
+                    {% endif %}
+                </span>
+				{% endfor %}
+                <br><br>
+                    <table class="table table-condensed table-striped">
+                    {% for article in my_articles %}
+                        <tr>
+                            <td>
+                                <a href="/articles/{{article.pk}}/">
+                                    <strong>{{article.title}}</strong><br>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/articles/{{article.pk}}/">
+                                    {{article.abstract}}
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td>nothing much going on here... please come back soon!</td></tr>
+                    {% endfor %}
+                    </table>
+			</div>
+		</div>
+	</div>
+    {% include "project/modal/edit_abstract.django" %}
+{% endblock body %}
+

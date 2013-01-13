@@ -1,0 +1,37 @@
+{% extends "base.django" %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="span12">
+				{% include "mainnav.django" %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="span12">
+				<div style="text-align:center;">
+					<h1>tag:{{tag.name}}</h1>
+					tag {{tag.name}} has the following relations
+					<hr />
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span4">
+                <div class="well">
+                    {% include "tag/sub/members.django" %}
+                </div>
+			</div>
+			<div class="span4">
+                <div class="well">
+                    {% include "tag/sub/projects.django" %}
+                </div>
+			</div>
+			<div class="span4">
+                <div class="well">
+                    {% include "tag/sub/article.django" %}
+                </div>
+			</div>
+{% endblock body %}
+
+

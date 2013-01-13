@@ -1,0 +1,10 @@
+<div class="btn-group">
+    <a class="btn btn-info" href="#"><i class="icon-envelope"></i> new article</a>
+    <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+        <li><a href="#">join</a></li>
+        <li><a href="#">create</a></li>
+    </ul>
+</div>

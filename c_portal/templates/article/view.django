@@ -1,0 +1,56 @@
+{% extends "base.django" %}
+
+{% load markup %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="span12">
+				{% include "mainnav.django" %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="span3">
+				{% include "article/nav.django" %}
+			</div>
+			<div class="span9">
+				<h1>{{article.title}}</h1>
+				{% for tag in my_tags %}
+                <span class="badge badge-inverse">
+                    <a href="/tags/{{tag.name}}/">{{tag.name}}</a>
+                    {% if request.user.username == article.author.nickname %}
+                        |<a href="/articles/{{article.id}}/untag/{{tag.name}}/">x</a>
+                    {% endif %}
+                </span>
+				{% endfor %}
+                <hr>
+                {{article.abstract|markdown}}
+                <br><br>
+                {{article.body|markdown}}
+                <hr />
+                <div class="pull-right">
+                    <small>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <td>last edit</td>
+                                    <td>published</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{article.mod_date}}</td>
+                                    <td>{{article.pub_date}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </small>
+                </div>
+			</div>
+		</div>
+	</div>
+
+    {% include "article/modal/delete.django" %}
+    {% include "article/modal/project.django" %}
+{% endblock body %}
+

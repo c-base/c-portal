@@ -1,0 +1,19 @@
+<div class="navbar">
+	<div class="navbar-inner">
+		<a class="brand" href="/">c-portal</a>
+		<ul class="nav">
+			<li class="divider"></li>
+            <li><a href="/members/">members</a></li>
+            <li><a href="/projects/">projects</a></li>
+			{% if request.user.is_authenticated %}
+            <li><a class="" href="/account/logout/?next={{request.path}}">logout</a></li>
+            <li><a href="/members/{{request.user.username}}/" class="">c-profile</a></li>
+			{% else %}
+			<li>
+            <a href="/account/login/?next={{request.path}}">login</a>
+			</li>
+			{% endif %}
+		</ul>
+	</div>
+</div>
+

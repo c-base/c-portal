@@ -1,0 +1,84 @@
+{% load markup %}
+
+{% if request.user.username == member.nickname %}
+<div class="pull-right">
+    <a href="#AboutmeModal"
+            class="btn btn-block btn-small btn-info"
+            rel="tooltip"
+            title="edit aboutme"
+            role="button"
+            data-toggle="modal"
+            >
+        <i class="icon-edit icon-white"></i>
+    </a>
+</div>
+{% endif %}
+
+<div style="text-align: justify;" id="aboutme" data-nickname="{{member.nickname}}">
+    {% if member.aboutme %}
+    {{member.aboutme|markdown}}
+    {% else %}
+    welcome to {{member}}'s c-pace, alien.
+    {% endif %}
+</div>
+{% if request.user.username == member.nickname %}
+{% endif %}
+<hr>
+
+<ul class="nav nav-list">
+    <li class="nav-header">my active projects</li>
+    {% for project in my_projects %}
+        <li>
+        <a href="/projects/{{project.name}}/">{{project.name}}</a>
+        </li>
+    {% empty %}
+        <li>no projects so far...</li>
+    {% endfor %}
+</ul>
+<hr>
+
+{% if request.user.username == member.nickname %}
+<form class="form" method="post" action="/article/create/">
+    <div class="control-group">
+        <div class="controls">
+            <div class="input-prepend">
+                <span class="add-on" rel="tooltip" title="add article"><i class="icon-file"></i></span>
+                <input id="id_title" type="text" name="title" maxlength="64" placeholder="title of new article"/>
+                {% csrf_token %}
+            </div>
+        </div>
+    </div>
+</form>
+
+<form class="form" method="post" action="/members/{{member}}/join_project/">
+    <div class="control-group">
+        <div class="controls">
+            <div class="input-prepend">
+                <span class="add-on"
+                        data-placement="top"
+                        rel="tooltip"
+                        title="join project">
+                    <i class="icon-book"></i>
+                </span>
+                <input id="id_name" type="text" name="name" maxlength="16" placeholder="join project"/>
+                {% csrf_token %}
+            </div>
+        </div>
+    </div>
+</form>
+
+<form class="form" method="post" action="/members/{{member}}/add_tags/">
+    <div class="control-group">
+        <div class="controls">
+            <div class="input-prepend">
+                <span class="add-on" rel="tooltip" title="add tags"><i class="icon-tags"></i></span>
+                <input id="id_name" type="text" name="name" maxlength="255" placeholder="add tags"/>
+                {% csrf_token %}
+            </div>
+        </div>
+    </div>
+</form>
+
+{% include "poll.django" %}
+
+{% endif %}

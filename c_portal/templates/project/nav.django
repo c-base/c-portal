@@ -1,0 +1,65 @@
+{% load markup %}
+
+{% if is_project_member %}
+<div class="pull-right">
+    <a href="#AbstractModal"
+            class="btn btn-block btn-small btn-info"
+            rel="tooltip"
+            title="edit abstract"
+            role="button"
+            data-toggle="modal"
+            >
+        <i class="icon-edit icon-white"></i>
+    </a>
+</div>
+{% endif %}
+<div style="text-align: justify;">
+    {% if project.abstract %}
+    {{project.abstract|markdown}}
+    {% else %}
+    welcome to project '{{project}}', alien.
+    {% endif %}
+</div>
+<br>
+
+{% if request.user.is_authenticated %}
+    {% if is_project_member %}
+        <a href="/projects/{{project}}/leave/"
+                class="btn btn-small btn-block btn-inverse">
+            leave project
+        </a>
+    {% else %}
+        <a href="/projects/{{project}}/join/"
+                class="btn btn-small btn-block btn-primary">
+            join project
+        </a>
+    {% endif %}
+{% endif %}
+
+<br>
+<ul class="nav nav-list">
+    <li class="nav-header">{{project.name}}'s members</li>
+    {% for member in my_members %}
+        <li>
+        <a href="/members/{{member.nickname}}/">{{member.nickname}}</a>
+        </li>
+    {% empty %}
+        <li>no members so far...</li>
+    {% endfor %}
+</ul>
+<hr>
+
+{% if request.user.is_authenticated and is_project_member %}
+<form class="form" method="post" action="/projects/{{project}}/add_tags/">
+    <div class="control-group">
+        <div class="controls">
+            <div class="input-prepend">
+                <span class="add-on" rel="tooltip" title="add tags"><i class="icon-tags"></i></span>
+                <input id="id_name" type="text" name="name" maxlength="64" placeholder="add tags"/>
+                {% csrf_token %}
+            </div>
+        </div>
+    </div>
+</form>
+{% endif %}
+

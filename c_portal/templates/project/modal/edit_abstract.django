@@ -1,0 +1,14 @@
+<div id="AbstractModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">edit project abstract</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form" method="post" action="/projects/{{project.name}}/abstract/">
+            {% csrf_token %}
+            {{ abstract_form.as_p }}
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <input type="submit" class="btn btn-primary" value="save aboutme">
+        </form>
+    </div>
+</div>

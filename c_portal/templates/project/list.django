@@ -1,0 +1,50 @@
+{% extends "base.django" %}
+
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            {% include "mainnav.django" %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <div class="container">
+                <div class="row">
+                    <div class="span10">
+                        <h1>available projects</h1>
+                    </div>
+                    <div class="span2">
+                        <div class="pull-right">
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#CreateProjectModal"
+                                    data-article="{{member.pk}}">
+                                new
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <table class="table table-condensed table-striped" border="0">
+                {% for project in projects %}
+                <tr>
+                    <td><a href="/projects/{{project}}/" ><b>{{project}}</b></a></td>
+                    <td><a href="/projects/{{project}}/">{{project.abstract}}</a></td>
+                </tr>
+                {% empty %}
+                <tr><td>no projects so far...</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% include "project/modal/create.django" %}
+{% endblock body%}
+

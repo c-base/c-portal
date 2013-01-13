@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+		<title>
+			{% if title %}
+			{{ title }} - 
+			{% endif %}
+			c-portal - c-base community plattform
+		</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <link href="/static/css/bootstrap.css" rel="stylesheet">
+	    <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+	    <link href="/static/css/bootstrap.custom.css" rel="stylesheet">
+        <style>
+            body {
+                padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+            }
+        </style>
+        <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+        <!-- link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.ico" -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <!-- a class="brand" href="/">crew.c-base.org</a -->
+                    <div class="nav-collapse collapse">
+						<p class="navbar-text pull-left">
+							welcome to the c-base community plattform,
+							{% if request.user.is_authenticated %}
+							{{ request.user.username }}.
+							{% else %}
+							alien.
+							{% endif %}
+						</p>
+                        <div class="pull-right">
+                            <ul class="nav">
+                                <li><a href="/getting-started/">getting-started</a></li>
+                                <li class="divider"></li>
+                                <!-- li><a href="http://dev.c-base.org/crew-c-base-org/c-portal" target="_new">repo</a></li -->
+                                <li><a href="http://dev.c-base.org/redmine/projects/cportal" target="_new">bugs|features</a></li>
+                                <li class="divider"></li>
+                                <!-- li><a href="/faq.html">f.a.q.</a></li -->
+                                <!-- li><a href="/release-notes.html">release notes</a></li -->
+                                <li><a href="http://www.c-base.org/cv50f/core/impressum.html">impressum</a></li>
+                            </ul>
+                        </div>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+		{% block mainnav %}
+		{% endblock mainnav %}
+		<br />
+		{% block body %}
+		{% endblock body %}
+    <script src="/static/js/jquery-latest.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/transitions.js"></script>
+    <script src="/static/js/tooltip.js"></script>
+    <script src="/static/js/c-portal.js"></script>
+    </body>
+</html>
+
+

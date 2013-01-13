@@ -1,0 +1,29 @@
+{% if poll %}
+<hr>
+    <h2>poll</h2>
+    <strong>{{ poll.question }}</strong><br>
+
+    {% if has_voted %}
+    {% for pb in progressbars %}
+    {{pb.title}}:<br>
+    {{ pb|safe }}
+    {% endfor %}
+    {% else %}
+        {% if error_message %}
+            <div class="alert">
+                <strong>{{ error_message }}</strong>
+            </div>
+        {% endif %}
+
+        <form class="form from-inline" action="/polls/{{ poll.id }}/vote/" method="post">
+            {% csrf_token %}
+            {% for choice in poll.choice_set.all %}
+            <label for="choice{{ forloop.counter }}">
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                {{ choice.choice }}
+            </label>
+            {% endfor %}
+            <input type="submit" value="vote" class="btn btn-small btn-primary"/>
+        </form>
+    {% endif %}
+{% endif %}
