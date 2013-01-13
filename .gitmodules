@@ -1,0 +1,3 @@
+[submodule "static"]
+	path = static
+	url = git://dev.c-base.org/c-portal/c-portal-bootstrap.git
