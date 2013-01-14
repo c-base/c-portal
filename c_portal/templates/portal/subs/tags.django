@@ -1,0 +1,7 @@
+<div class="extra-line-spacing">
+{% for tag in tags %}
+    <a href="/tags/{{tag.name}}/" class="badge badge-inverse">{{tag.name}}</a>
+{% empty %}
+    no tags so far...
+{% endfor %}
+</div>

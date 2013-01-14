@@ -1,0 +1,18 @@
+    <table class="table table-condensed table-striped">
+        <thead>
+            <tr><td>latest projects</td></tr>
+        </thead>
+        <tbody>
+            {% for p in latest_projects %}
+            <tr>
+                <td>
+                    {% if p.abstract %}
+                    <a href="/projects/{{p.name}}" title="{{p.name}}">{{p.abstract}}</a>
+                    {% else %}
+                    <a href="/projects/{{p.name}}/" title="{{p.name}}">{{p.name}}</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
