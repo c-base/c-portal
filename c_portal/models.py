@@ -82,7 +82,7 @@ class ContentNode(models.Model):
 	pub_date = models.DateTimeField(auto_now_add=True, default=tz.now())
 	mod_date = models.DateTimeField(auto_now=True, default=tz.now())
 	tags = models.ManyToManyField(Tag, blank=True, null=True)
-	published = models.BooleanField(default=True)
+	published = models.BooleanField(default=False)
 	objects = ContentManager()
 
 	class Meta:
