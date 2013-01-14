@@ -131,6 +131,7 @@ AUTH_LDAP_REQUIRE_GROUP = "cn=crew,ou=groups,dc=c-base,dc=org"
 AUTH_LDAP_GROUP_TYPE = GroupOfNamesType(name_attr="cn")
 AUTH_LDAP_USER_FLAGS_BY_GROUP = {
 	"is_member": "cn=crew,ou=groups,dc=c-base,dc=org",
+	"is_circle_member": "cn=circle,ou=groups,dc=c-base,dc=org",
 }
 
 AUTHENTICATION_BACKENDS = (
@@ -138,14 +139,14 @@ AUTHENTICATION_BACKENDS = (
 		'django.contrib.auth.backends.ModelBackend',
 		)
 
-if DEBUG:
-	import logging, logging.handlers
-	logfile = "/tmp/django-ldap-debug.log"
-	my_logger = logging.getLogger('django_auth_ldap')
-	my_logger.setLevel(logging.DEBUG)
-	handler = logging.handlers.RotatingFileHandler(
-	logfile, maxBytes=1024 * 500, backupCount=5)
-	my_logger.addHandler(handler)
+#if DEBUG:
+#	import logging, logging.handlers
+#	logfile = "/tmp/django-ldap-debug.log"
+#	my_logger = logging.getLogger('django_auth_ldap')
+#	my_logger.setLevel(logging.DEBUG)
+#	handler = logging.handlers.RotatingFileHandler(
+#	logfile, maxBytes=1024 * 500, backupCount=5)
+#	my_logger.addHandler(handler)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -163,6 +164,7 @@ INSTALLED_APPS = (
 	'c_portal',
 	'api',
 	'polls',
+	'shoutbox',
 )
 
 # A sample logging configuration. The only tangible logging
