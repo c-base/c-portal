@@ -1,5 +1,4 @@
 {% if poll %}
-<hr>
     <h2>poll</h2>
     <strong>{{ poll.question }}</strong><br>
 
