@@ -51,8 +51,8 @@
                             <ul class="nav">
                                 <li><a href="/getting-started/">getting-started</a></li>
                                 <li class="divider"></li>
-                                <!-- li><a href="http://dev.c-base.org/crew-c-base-org/c-portal" target="_new">repo</a></li -->
                                 <li><a href="http://dev.c-base.org/redmine/projects/cportal" target="_new">bugs|features</a></li>
+                                <li><a href="http://dev.c-base.org/c-portal/#more" target="_new">code</a></li>
                                 <li class="divider"></li>
                                 <!-- li><a href="/faq.html">f.a.q.</a></li -->
                                 <!-- li><a href="/release-notes.html">release notes</a></li -->
