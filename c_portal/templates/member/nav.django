@@ -79,6 +79,4 @@
     </div>
 </form>
 
-{% include "poll.django" %}
-
 {% endif %}

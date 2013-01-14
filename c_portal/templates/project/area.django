@@ -21,25 +21,41 @@
                     {% endif %}
                 </span>
 				{% endfor %}
-                <br><br>
-                    <table class="table table-condensed table-striped">
-                    {% for article in my_articles %}
-                        <tr>
-                            <td>
-                                <a href="/articles/{{article.pk}}/">
-                                    <strong>{{article.title}}</strong><br>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="/articles/{{article.pk}}/">
-                                    {{article.abstract}}
-                                </a>
-                            </td>
-                        </tr>
-                    {% empty %}
-                        <tr><td>nothing much going on here... please come back soon!</td></tr>
-                    {% endfor %}
-                    </table>
+                <br>
+                <div class="well">
+                    <div class="accordion" id="article_accordion">
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle btn btn-info"
+                                    data-toggle="collapse"
+                                    data-parent="#article_accordion"
+                                    href="#CollapseOne">{{project}}'s content</a>
+                            </div>
+                            <div id="CollapseOne" class="accordion-body collapse in">
+                                <div class="accordion-inner">
+                                    <table class="table table-condensed table-striped">
+                                    {% for article in my_articles %}
+                                        <tr>
+                                            <td>
+                                                <a href="/articles/{{article.pk}}/">
+                                                    <strong>{{article.title}}</strong><br>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="/articles/{{article.pk}}/">
+                                                    {{article.abstract}}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr><td>nothing much going on here... please come back soon!</td></tr>
+                                    {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>

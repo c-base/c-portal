@@ -21,36 +21,95 @@
                     {% endif %}
                 </span>
                 {% endfor %}
-                <br><br>
-                <table class="table table-condensed table-striped">
-                    {% for article in my_articles %}
-                    <tr>
-                        <td>
-                            <a href="/articles/{{article.pk}}/">
-                                <strong>{{article.title}}</strong><br>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="/articles/{{article.pk}}/">
-                                {{article.abstract}}
-                            </a>
-                        </td>
-                        {% if request.user.username == article.author.nickname %}
-                        <td class="span1">
-                            <a href="/articles/{{article.pk}}/unpublish/">
-                                <i class="icon-filter icon-white" rel="tooltip" title="unpublish"></i>
-                            </a>
-                        </td>
+                <br>
+                <div class="well">
+                    <div class="accordion" id="article_accordion">
+                        {% if request.user.is_authenticated and request.user.username == member.nickname and poll %}
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle btn btn-info"
+                                    data-toggle="collapse"
+                                    data-parent="#article_accordion"
+                                    href="#CollapsePoll">poll</a>
+                            </div>
+                            <div id="CollapsePoll" class="accordion-body collapse {%if my_unpublished%}in{%endif%}">
+                                <div class="accordion-inner">
+                                    {% include "poll.django" %}
+                                </div>
+                            </div>
+                        </div>
+                        {%endif%}
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle btn btn-info"
+                                    data-toggle="collapse"
+                                    data-parent="#article_accordion"
+                                    href="#CollapseOne">{{member}}'s content</a>
+                            </div>
+                            <div id="CollapseOne" class="accordion-body collapse {%if not my_unpublished%}in{%endif%}">
+                                <div class="accordion-inner">
+                                    <table class="table table-condensed table-striped">
+                                        {% for article in my_articles %}
+                                        <tr>
+                                            <td>
+                                                <a href="/articles/{{article.pk}}/">
+                                                    <strong>{{article.title}}</strong><br>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="/articles/{{article.pk}}/">
+                                                    {{article.abstract}}
+                                                </a>
+                                            </td>
+                                            {% if request.user.username == article.author.nickname %}
+                                            <td class="span1">
+                                                <a href="/articles/{{article.pk}}/unpublish/">
+                                                    <i class="icon-filter icon-white" rel="tooltip" title="unpublish"></i>
+                                                </a>
+                                            </td>
+                                            {% endif %}
+                                        </tr>
+                                        {% empty %}
+                                        <tr><td>nothing much going on here... please come back soon!</td></tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        {% if my_unpublished %}
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle btn btn-info"
+                                    data-toggle="collapse"
+                                    data-parent="#article_accordion"
+                                    href="#CollapseTwo">unpublished articles</a>
+                            </div>
+                            <div id="CollapseTwo" class="accordion-body collapse {%if my_unpublished%}in{%endif%}">
+                                <div class="accordion-inner">
+                                    <table class="table table-condensed table-striped">
+                                        {% for a in my_unpublished %}
+                                        <tr>
+                                            <td><a href="/articles/{{a.id}}/"><strong>{{a}}</strong></a></td>
+                                            <td><a href="/articles/{{a.id}}/">{{a.abstract}}</a></td>
+                                            <td class="span1">
+                                                <a href="/articles/{{a.id}}/publish/">
+                                                    <i class="icon-ok icon-white"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                         {% endif %}
-                    </tr>
-                    {% empty %}
-                    <tr><td>nothing much going on here... please come back soon!</td></tr>
-                    {% endfor %}
-                </table>
-                {% include "member/unpublished.django" %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    {% include "member/modal/edit_aboutme.django" %}
+    {% if request.user.is_authenticated %}
+        {% include "member/modal/edit_aboutme.django" %}
+    {% endif %}
 {% endblock body %}
 
