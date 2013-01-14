@@ -11,7 +11,7 @@
 			<div class="span3">
                 {% include "project/nav.django" %}
 			</div>
-			<div class="span9">
+			<div class="span9 extra-line-spacing">
 				<h1>{{project.name}}</h1>
 				{% for tag in my_tags %}
                 <span class="badge badge-inverse">
