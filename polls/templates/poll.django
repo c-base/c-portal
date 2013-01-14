@@ -1,6 +1,6 @@
 {% if poll %}
-    <h2>poll</h2>
-    <strong>{{ poll.question }}</strong><br>
+    <h2>{{ poll.question }}</h2>
+    <br>
 
     {% if has_voted %}
     {% for pb in progressbars %}
