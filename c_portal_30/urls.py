@@ -7,16 +7,17 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'c_portal_30.views.home', name='home'),
-    # url(r'^c_portal_30/', include('c_portal_30.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     url(r'^wonderland/', include(admin.site.urls)),
 
+	url(r'^rpc/', jsonrpc_site.dispatch),
+
+	url(r'^account/', include('account.urls')),
+
 	url(r'^polls/', include('polls.urls')),
+
+	url(r'^shoutbox/', include('shoutbox.urls')),
 
 	url(r'^getting-started/$', 'c_portal.views.getting_started'),
 
@@ -68,8 +69,6 @@ urlpatterns = patterns('',
 
 	url(r'^tags/(?P<tag_name>.*)/', 'c_portal.views.tag'),
 
-	url(r'^rpc/', jsonrpc_site.dispatch),
-
 	url(r'^article/create/', 'c_portal.views.create_article'),
 	url(
 		r'^articles/(?P<article_id>\d+)/tag/(?P<tag_name>.*)/$',
@@ -88,7 +87,5 @@ urlpatterns = patterns('',
 	url(r'^articles/(?P<pk>\d+)/edit/$', 'c_portal.views.edit_article'),
 	url(r'^articles/(?P<pk>\d+)/delete/$', 'c_portal.views.delete_article'),
 	url(r'^articles/(?P<pk>\d+)/$', 'c_portal.views.article'),
-
-	url(r'^account/', include('account.urls')),
 )
 
