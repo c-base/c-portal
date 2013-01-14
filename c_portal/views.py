@@ -36,24 +36,26 @@ def member_area(request, nickname):
 	my_projects = member.project_set.all()
 	my_articles = Article.objects.published().filter(
 			author=member).order_by('-pub_date')
-	my_unpublished = Article.objects.unpublished().filter(
-			author=member).order_by('-pub_date')
 	my_featured = my_articles.filter(featured=True)
 	my_tags = sorted(member.tags.all(),
 			key=lambda x: x.popularity, reverse=True)
-	projects_form = SelectProjectForm()
-	project_form = ProjectForm()
-	addtag_form = AddTagForm()
-	joinproject_form = JoinProjectForm()
-	aboutme_form = AboutmeForm(instance=member)
-	poll = Poll.objects.get(pk=1)
-	has_voted = member.nickname in [
-			u.username for u in poll.participants.all()]
-	total_votes = sum([c.votes for c in poll.choice_set.all()])
-	progressbars = []
-	for choice in poll.choice_set.all():
-		progressbars.append(ProgressBar(
-			choice.choice, total_votes, choice.votes))
+
+	if request.user.is_authenticated():
+		my_unpublished = Article.objects.unpublished().filter(
+				author=member).order_by('-pub_date')
+		projects_form = SelectProjectForm()
+		project_form = ProjectForm()
+		addtag_form = AddTagForm()
+		joinproject_form = JoinProjectForm()
+		aboutme_form = AboutmeForm(instance=member)
+		poll = Poll.objects.get(pk=1)
+		has_voted = member.nickname in [
+				u.username for u in poll.participants.all()]
+		total_votes = sum([c.votes for c in poll.choice_set.all()])
+		progressbars = []
+		for choice in poll.choice_set.all():
+			progressbars.append(ProgressBar(
+				choice.choice, total_votes, choice.votes))
 	return render_to_response(
 			'member/area.django', RequestContext(request, locals()))
 
@@ -203,7 +205,7 @@ def create_article(request):
 			article.abstract = form.cleaned_data['abstract']
 			article.body = form.cleaned_data['body']
 			article.save()
-			return HttpResponseRedirect('/articles/%d/' % article.pk )
+			return HttpResponseRedirect('/members/%s/' % member.nickname )
 		else:
 			form = ArticleForm(request.POST)
 	else:
