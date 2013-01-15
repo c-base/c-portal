@@ -1,3 +1,4 @@
+distribute>=0.6.33
 Django==1.4.3
 Markdown==2.2.1
 South==0.7.6
