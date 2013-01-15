@@ -1,7 +1,10 @@
 from c_portal.models import *
-from c_portal.forms import *
 from polls.models import *
+from shoutbox.models import *
+
 from polls.utils import *
+from c_portal.forms import *
+from shoutbox.forms import *
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
@@ -69,6 +72,10 @@ def project_area(request, project_name):
 	my_tags = sorted(project.tags.all(), key=lambda x: x.popularity, reverse=True)
 	is_project_member = request.user.username in [m.nickname for m in project.members.all()]
 	abstract_form = AbstractForm(instance=project)
+	shoutbox, created = Box.objects.get_or_create(project_id=project.id)
+	if created:
+		shoutbox.save()
+	shout_form = AddShoutForm()
 	return render_to_response('project/area.django', RequestContext(request, locals()))
 
 def join_project(request, project_name=None):

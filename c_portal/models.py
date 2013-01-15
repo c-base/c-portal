@@ -71,6 +71,7 @@ class Project(models.Model):
 				if len(self.members.all()) == 0:
 					self.delete()
 
+
 class ContentNode(models.Model):
 	title = models.CharField(max_length=64, db_index=True)
 	author = models.ForeignKey(Member)

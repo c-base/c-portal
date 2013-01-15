@@ -32,7 +32,7 @@
                                     data-parent="#article_accordion"
                                     href="#CollapsePoll">poll</a>
                             </div>
-                            <div id="CollapsePoll" class="accordion-body collapse {%if my_unpublished%}in{%endif%}">
+                            <div id="CollapsePoll" class="accordion-body collapse">
                                 <div class="accordion-inner">
                                     {% include "poll.django" %}
                                 </div>
