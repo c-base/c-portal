@@ -1,8 +1,7 @@
-distribute>=0.6.33
 Django==1.4.3
 Markdown==2.2.1
 South==0.7.6
-distribute==0.6.10
+distribute>=0.6.10
 django-auth-ldap==1.1.2
 django-json-rpc==0.6.1
 flup==1.0.3.dev-20110405
