@@ -85,6 +85,13 @@ class Project(models.Model):
 				if len(self.members.all()) == 0:
 					self.delete()
 
+	@property
+	def get_latest_tick(self):
+		latest = self.article_set.all().order_by('-pub_date')
+		if latest:
+			return latest[0].pub_date
+		return tz.make_aware(datetime.datetime(1970,1,1), tz.get_default_timezone())
+
 
 class ContentNode(models.Model):
 	title = models.CharField(max_length=64, db_index=True)

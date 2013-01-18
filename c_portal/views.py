@@ -64,7 +64,6 @@ def member_area(request, nickname):
 
 def project_area(request, project_name):
 	members = Member.objects.active()
-	projects = Project.objects.all()
 	project = get_object_or_404(Project, name=project_name)
 	my_members = project.members.all()
 	my_articles = Article.objects.published().filter(
@@ -120,7 +119,7 @@ def projects(request):
 
 def list_projects(request):
 	members = Member.objects.active()
-	projects = Project.objects.all().order_by('-id')
+	projects = sorted(Project.objects.all(), key=lambda x:x.get_latest_tick, reverse=True)
 	if request.user.is_authenticated():
 		member = Member.objects.get(nickname=request.user.username)
 		if request.method == "POST":
