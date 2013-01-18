@@ -20,12 +20,7 @@ def _get_params_from_json_request(request):
 @jsonrpc_method('api.get_member')
 def get_member(request, nickname):
 	member = Member.objects.get(nickname=nickname)
-	return json.loads(
-			serializers.serialize(
-				'json',
-				[ member ],
-				)
-			)
+	return member.serialize()
 
 @jsonrpc_method('api.add_me', authenticated=True)
 def add_me(request):

@@ -3,8 +3,13 @@ from django.db import models
 from django.utils import timezone as tz
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import ValidationError
+from django.core import serializers
 
 from c_portal.managers import *
+
+import datetime
+
+import json
 
 
 class Tag(models.Model):
@@ -33,7 +38,6 @@ class Tag(models.Model):
 		articles = len(self.article_set.all())
 		return members + projects + articles
 
-
 class Member(models.Model):
 	nickname = models.CharField(max_length=64, unique=True, db_index=True)
 	aboutme = models.CharField(max_length=4096)
@@ -50,6 +54,16 @@ class Member(models.Model):
 	def get_active(self):
 		return Member.objects.filter(active=True)
 
+	def serialize(self):
+		return {
+				'model': 'c_portal.member',
+				'pk': self.id,
+				'fields': {
+					'nickname': self.nickname,
+					'aboutme': self.aboutme,
+					'tags': [t.name for t in self.tags.all()],
+					},
+				}
 
 class Project(models.Model):
 	name = models.CharField(max_length=64, unique=True, db_index=True)
