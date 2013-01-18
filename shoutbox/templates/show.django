@@ -1,0 +1,15 @@
+<table class="table table-condensed table-striped">
+    <thead>
+        <tr>
+            <td col_span="2">shoutbox: {{shoutbox.title}}</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for shout in shoutbox.shout_set.all %}
+        <tr>
+            <td>{{shout.nickname}}:</td>
+            <td>{{shout.shout}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

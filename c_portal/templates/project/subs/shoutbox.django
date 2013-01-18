@@ -1,0 +1,28 @@
+<h3>shoutbox</h3>
+<table class="table table-condensed table-striped">
+    {% for shout in shoutbox.shout_set.all %}
+    <tr>
+        <td class="span1">{{shout.nickname}}:</td>
+        <td>{{shout.shout}}</td>
+        <td>
+            {%if shout.nickname == request.user.username%}
+            <div class="pull-right">
+                <a href="/shoutbox/{{shoutbox.id}}/delete/{{shout.id}}/?next={{request.path}}">
+                    <i class="icon-remove"></i>
+                </a>
+            </div>
+            {%endif%}
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td>no shouts so far...</td></tr>
+    {% endfor %}
+</table>
+{% if request.user.is_authenticated %}
+<form class="form" action="/shoutbox/{{shoutbox.id}}/add/?next={{request.path}}" method="post">
+    {% csrf_token %}
+    {% for field in shout_form %}
+        {{field}}
+    {% endfor %}
+</form>
+{%endif%}

@@ -1,0 +1,13 @@
+<table class="table table-condensed table-striped">
+    {% for b in shoutboxes %}
+    <tr>
+        <td>
+            <a href="/shoutbox/{{b.id}}/">{{b}}</a>
+        </td>
+    </tr>
+    {% empty %}
+
+
+
+    {% endfor %}
+</table>
