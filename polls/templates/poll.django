@@ -25,4 +25,5 @@
             <input type="submit" value="vote" class="btn btn-small btn-primary"/>
         </form>
     {% endif %}
+	{% include "comments.django" %}
 {% endif %}

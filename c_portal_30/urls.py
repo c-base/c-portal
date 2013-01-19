@@ -9,6 +9,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
+	url(r'comments/', include('django.contrib.comments.urls')),
+
     url(r'^wonderland/', include(admin.site.urls)),
 
 	url(r'^rpc/', jsonrpc_site.dispatch),

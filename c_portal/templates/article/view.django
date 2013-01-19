@@ -27,25 +27,21 @@
                 {{article.abstract|markdown}}
                 <br><br>
                 {{article.body|markdown}}
-                <hr />
-                <div class="pull-right">
-                    <small>
-                        <table class="table table-condensed">
-                            <thead>
-                                <tr>
-                                    <td>last edit</td>
-                                    <td>published</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{{article.mod_date}}</td>
-                                    <td>{{article.pub_date}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </small>
-                </div>
+
+				<hr>
+
+				<blockquote class="pull-right">
+					<div class="pull-right">published</div><br>
+					<small>{{article.pub_date}}</small>
+				</blockquote>
+				<blockquote>
+					last edit
+					<small>{{article.mod_date}}</small>
+				</blockquote>
+
+				<hr>
+
+				{% include "article/comments.django" %}
 			</div>
 		</div>
 	</div>

@@ -158,6 +158,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
 	'django.contrib.markup',
+	'django.contrib.comments',
 	'south',
 	'jsonrpc',
 	'account',

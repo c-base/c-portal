@@ -1,3 +1,11 @@
+<div class="pull-right well span4">
+	<strong>latest comments:</strong><br>
+	{% for comment in comments %}
+	<a href="/members/{{comment.user}}/">{{comment.name}}</a>: {{comment.comment}}
+	{% empty %}
+	no comments, so far...
+	{% endfor %}
+</div>
 {% for a in featured %}
 <blockquote><a href="/articles/{{a.id}}/">{{a.title}}</a></h2>
 <small>{{a.abstract}} <a href="/articles/{{a.id}}/">weiterlesen...</a></small>

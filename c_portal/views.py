@@ -10,7 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.comments.models import Comment
 
 def portal_area(request):
 	members = Member.objects.active()
@@ -20,6 +20,7 @@ def portal_area(request):
 			).order_by('-pub_date')[:10]
 	tags = sorted(Tag.objects.all(), key=lambda x: x.popularity, reverse=True)
 	latest_projects = Project.objects.all().order_by('-pk')[:8]
+	comments = Comment.objects.all().order_by('-id')[:5]
 	return render_to_response('portal/area.django', locals())
 
 def member_area(request, nickname):
