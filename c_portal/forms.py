@@ -6,8 +6,13 @@ from c_portal.models import *
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ('title', 'abstract', 'body')
-
+        fields = ('title', 'abstract', 'body', 'project')
+        widgets = {
+                'title': forms.TextInput(attrs = {'class': 'input-block-level'}),
+                'abstract': forms.Textarea(attrs = {'class': 'input-block-level'}),
+                'body': forms.Textarea(attrs = {'class': 'input-block-level'}),
+                'project': forms.Select(attrs = {'class': 'input-block-level'})
+                }
 
 class SelectProjectForm(forms.Form):
     projects = forms.ModelMultipleChoiceField(queryset=Project.objects.all())

@@ -206,7 +206,6 @@ def create_article(request):
 		article = Article(author=member)
 		form = ArticleForm(request.POST, instance=article)
 		if form.is_valid():
-			print 'valid'
 			article.title = form.cleaned_data['title']
 			article.abstract = form.cleaned_data['abstract']
 			article.body = form.cleaned_data['body']
@@ -216,9 +215,6 @@ def create_article(request):
 			form = ArticleForm(request.POST)
 	else:
 		form = ArticleForm()
-	form.fields['title'].widget.attrs['class'] = 'input-block-level'
-	form.fields['abstract'].widget.attrs['class'] = "input-block-level"
-	form.fields['body'].widget.attrs['class'] = "input-block-level"
 	return render_to_response(
 			"article/create.django",
 			RequestContext(request, locals())
