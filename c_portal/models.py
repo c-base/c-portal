@@ -13,120 +13,120 @@ import json
 
 
 class Tag(models.Model):
-	name = models.CharField(max_length=24, unique=True, db_index=True)
-	create_date = models.DateTimeField(auto_now_add=True, default=tz.now())
+    name = models.CharField(max_length=24, unique=True, db_index=True)
+    create_date = models.DateTimeField(auto_now_add=True, default=tz.now())
 
-	def __unicode__(self):
-		return self.name
+    def __unicode__(self):
+        return self.name
 
     def get_my_url(self):
         return '/tags/%s/' % self.name
 
-	def save(self, *args, **kwargs):
-		self.name = self.name.lower()
-		return super(Tag, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        self.name = self.name.lower()
+        return super(Tag, self).save(*args, **kwargs)
 
-	@property
-	def is_empty(self):
-		if len(self.member_set.all()) == 0:
-			if len(self.project_set.all()) == 0:
-				if len(self.article_set.all()) == 0:
-					return True
-		return False
+    @property
+    def is_empty(self):
+        if len(self.member_set.all()) == 0:
+            if len(self.project_set.all()) == 0:
+                if len(self.article_set.all()) == 0:
+                    return True
+        return False
 
-	@property
-	def popularity(self):
-		members = len(self.member_set.all())
-		projects = len(self.project_set.all())
-		articles = len(self.article_set.all())
-		return members + projects + articles
+    @property
+    def popularity(self):
+        members = len(self.member_set.all())
+        projects = len(self.project_set.all())
+        articles = len(self.article_set.all())
+        return members + projects + articles
 
 class Member(models.Model):
-	nickname = models.CharField(max_length=64, unique=True, db_index=True)
-	aboutme = models.CharField(max_length=4096)
-	tags = models.ManyToManyField(Tag, blank=True, null=True)
-	active = models.BooleanField(default=True)
-	objects = MemberManager()
+    nickname = models.CharField(max_length=64, unique=True, db_index=True)
+    aboutme = models.CharField(max_length=4096)
+    tags = models.ManyToManyField(Tag, blank=True, null=True)
+    active = models.BooleanField(default=True)
+    objects = MemberManager()
 
     def get_my_url(self):
         return '/members/%s/' % self.nickname
 
-	def __unicode__(self):
-		return self.nickname
+    def __unicode__(self):
+        return self.nickname
 
-	def get_profile(self):
-		return User.objects.get(username=self.nickname)
+    def get_profile(self):
+        return User.objects.get(username=self.nickname)
 
-	def get_active(self):
-		return Member.objects.filter(active=True)
+    def get_active(self):
+        return Member.objects.filter(active=True)
 
-	def serialize(self):
-		return {
-				'model': 'c_portal.member',
-				'pk': self.id,
-				'fields': {
-					'nickname': self.nickname,
-					'aboutme': self.aboutme,
-					'tags': [t.name for t in self.tags.all()],
-					},
-				}
+    def serialize(self):
+        return {
+                'model': 'c_portal.member',
+                'pk': self.id,
+                'fields': {
+                    'nickname': self.nickname,
+                    'aboutme': self.aboutme,
+                    'tags': [t.name for t in self.tags.all()],
+                    },
+                }
 
 class Project(models.Model):
-	name = models.CharField(max_length=64, unique=True, db_index=True)
-	abstract = models.CharField(max_length=4096, default='')
-	members = models.ManyToManyField(Member)
-	tags = models.ManyToManyField(Tag, blank=True, null=True)
+    name = models.CharField(max_length=64, unique=True, db_index=True)
+    abstract = models.CharField(max_length=4096, default='')
+    members = models.ManyToManyField(Member)
+    tags = models.ManyToManyField(Tag, blank=True, null=True)
 
     def get_my_url(self):
         return '/projects/%s/' % self.name
 
-	def __unicode__(self):
-		return self.name
+    def __unicode__(self):
+        return self.name
 
-	def save(self, *args, **kwargs):
-		super(Project, self).save(*args, **kwargs)
-		if self.name in [g.name for g in Group.objects.all()]:
-			for member in self.members.all():
-				user = User.objects.get(username=member.nickname)
-				if not self.name in [g.name for g in user.groups.all()]:
-					self.members.remove(member)
-				super(Project, self).save(*args, **kwargs)
-				if len(self.members.all()) == 0:
-					self.delete()
+    def save(self, *args, **kwargs):
+        super(Project, self).save(*args, **kwargs)
+        if self.name in [g.name for g in Group.objects.all()]:
+            for member in self.members.all():
+                user = User.objects.get(username=member.nickname)
+                if not self.name in [g.name for g in user.groups.all()]:
+                    self.members.remove(member)
+                super(Project, self).save(*args, **kwargs)
+                if len(self.members.all()) == 0:
+                    self.delete()
 
-	@property
-	def get_latest_tick(self):
-		latest = self.article_set.all().order_by('-pub_date')
-		if latest:
-			return latest[0].pub_date
-		return tz.make_aware(datetime.datetime(1970,1,1), tz.get_default_timezone())
+    @property
+    def get_latest_tick(self):
+        latest = self.article_set.all().order_by('-pub_date')
+        if latest:
+            return latest[0].pub_date
+        return tz.make_aware(datetime.datetime(1970,1,1), tz.get_default_timezone())
 
 
 class ContentNode(models.Model):
-	title = models.CharField(max_length=64, db_index=True)
-	author = models.ForeignKey(Member)
-	project = models.ForeignKey(
-			Project,
-			null = True,
-			blank = True
-			)
-	pub_date = models.DateTimeField(auto_now_add=True, default=tz.now())
-	mod_date = models.DateTimeField(auto_now=True, default=tz.now())
-	tags = models.ManyToManyField(Tag, blank=True, null=True)
-	published = models.BooleanField(default=False)
-	objects = ContentManager()
+    title = models.CharField(max_length=64, db_index=True)
+    author = models.ForeignKey(Member)
+    project = models.ForeignKey(
+            Project,
+            null = True,
+            blank = True
+            )
+    pub_date = models.DateTimeField(auto_now_add=True, default=tz.now())
+    mod_date = models.DateTimeField(auto_now=True, default=tz.now())
+    tags = models.ManyToManyField(Tag, blank=True, null=True)
+    published = models.BooleanField(default=False)
+    objects = ContentManager()
 
-	class Meta:
-		abstract = True
+    class Meta:
+        abstract = True
 
-	def __unicode__(self):
-		return self.title
+    def __unicode__(self):
+        return self.title
 
 
 class Article(ContentNode):
-	abstract = models.TextField(max_length=4096, blank=True, null=True)
-	body = models.TextField(max_length=65536)
-	featured = models.BooleanField(default=False)
+    abstract = models.TextField(max_length=4096, blank=True, null=True)
+    body = models.TextField(max_length=65536)
+    featured = models.BooleanField(default=False)
 
     def get_my_url(self):
         return '/articles/%s/' % self.id
