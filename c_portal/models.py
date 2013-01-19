@@ -19,6 +19,9 @@ class Tag(models.Model):
 	def __unicode__(self):
 		return self.name
 
+    def get_my_url(self):
+        return '/tags/%s/' % self.name
+
 	def save(self, *args, **kwargs):
 		self.name = self.name.lower()
 		return super(Tag, self).save(*args, **kwargs)
@@ -45,6 +48,9 @@ class Member(models.Model):
 	active = models.BooleanField(default=True)
 	objects = MemberManager()
 
+    def get_my_url(self):
+        return '/members/%s/' % self.nickname
+
 	def __unicode__(self):
 		return self.nickname
 
@@ -70,6 +76,9 @@ class Project(models.Model):
 	abstract = models.CharField(max_length=4096, default='')
 	members = models.ManyToManyField(Member)
 	tags = models.ManyToManyField(Tag, blank=True, null=True)
+
+    def get_my_url(self):
+        return '/projects/%s/' % self.name
 
 	def __unicode__(self):
 		return self.name
@@ -118,3 +127,7 @@ class Article(ContentNode):
 	abstract = models.TextField(max_length=4096, blank=True, null=True)
 	body = models.TextField(max_length=65536)
 	featured = models.BooleanField(default=False)
+
+    def get_my_url(self):
+        return '/articles/%s/' % self.id
+
