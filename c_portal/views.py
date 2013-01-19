@@ -17,7 +17,7 @@ def portal_area(request):
 	projects = Project.objects.all()
 	featured = Article.objects.published().filter(
 			featured=True,
-			).order_by('-pub_date')[:10]
+			).order_by('-pub_date')[:8]
 	tags = sorted(Tag.objects.all(), key=lambda x: x.popularity, reverse=True)
 	latest_projects = Project.objects.all().order_by('-pk')[:8]
 	comments = Comment.objects.all().order_by('-id')[:5]
@@ -37,7 +37,7 @@ def member_area(request, nickname):
 				member.aboutme = aboutme
 				member.save()
 				return HttpResponse()
-	my_projects = member.project_set.all()
+	my_projects = sorted(member.project_set.all(), key=lambda x: x.get_latest_tick, reverse=True)
 	my_articles = Article.objects.published().filter(
 			author=member).order_by('-pub_date')
 	my_featured = my_articles.filter(featured=True)

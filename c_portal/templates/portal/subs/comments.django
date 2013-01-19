@@ -1,0 +1,6 @@
+{% for comment in comments %}
+<a href="{{comment.content_object.get_my_url}}"><i class="icon-bookmark"></i></a>
+<a href="/members/{{comment.user}}/">{{comment.name}}</a>: {{comment.comment}}<br>
+{% empty %}
+no comments, so far...
+{% endfor %}

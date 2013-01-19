@@ -1,0 +1,170 @@
+diff --git c_portal/templates/article/comments.django c_portal/templates/article/comments.django
+new file mode 100644
+index 0000000..34b4bfb
+--- /dev/null
++++ c_portal/templates/article/comments.django
+@@ -0,0 +1,30 @@
++{% load comments %}
++
++{% if request.user.is_authenticated %}
++	<div class="row">
++		<div class="span9">
++			<div class="pull-right">
++				{% get_comment_form for article as form %}
++				<form action="{% comment_form_target %}" method="post">
++					{% csrf_token %}<br>
++					<input id="id_comment" name="comment"><br>
++					<input type="text" name="honeypot" id="id_honeypot" /><br>
++					{{ form.content_type }}
++					{{ form.object_pk }}
++					{{ form.timestamp }}
++					{{ form.security_hash }}
++					<input type="hidden" name="next" value="{{request.path}}">
++					<input type="submit" name="submit" value="comment" class="btn btn-block">
++				</form>
++			</div>
++			<strong>comments:</strong><br>
++			{% get_comment_list for article as comment_list %}
++			{% for comment in comment_list %}
++			{{comment.name }}: {{comment.comment}}
++			<br>
++			{% empty %}
++				no comments, so far...
++			{% endfor %}
++		</div>
++	</div>
++{% endif %}
+diff --git c_portal/templates/member/nav.django c_portal/templates/member/nav.django
+index f82887e..9b869b2 100644
+--- c_portal/templates/member/nav.django
++++ c_portal/templates/member/nav.django
+@@ -28,13 +28,14 @@
+ <ul class="nav nav-list">
+     <li class="nav-header">my active projects</li>
+     {% for project in my_projects %}
+-        <li>
+-        <a href="/projects/{{project.name}}/">{{project.name}}</a>
+-        </li>
++	<li>
++		<a href="/projects/{{project.name}}/">{{project.name}}</a>
++	</li>
+     {% empty %}
+         <li>no projects so far...</li>
+     {% endfor %}
+ </ul>
++
+ <hr>
+ 
+ {% if request.user.username == member.nickname %}
+diff --git c_portal/templates/portal/area.django c_portal/templates/portal/area.django
+index ea4260a..e94aeaa 100644
+--- c_portal/templates/portal/area.django
++++ c_portal/templates/portal/area.django
+@@ -17,7 +17,20 @@
+                                 <a class="accordion-toggle btn btn-info"
+                                     data-toggle="collapse"
+                                     data-parent="#portal_accordion"
+-                                    href="#CollapseOne">latest articles</a>
++                                    href="#CollapseZero">latest comments</a>
++                            </div>
++                            <div id="CollapseZero" class="accordion-body collapse">
++                                <div class="accordion-inner">
++                                    {% include "portal/subs/comments.django" %}
++                                </div>
++                            </div>
++                        </div>
++                        <div class="accordion-group">
++                            <div class="accordion-heading">
++                                <a class="accordion-toggle btn btn-info"
++                                    data-toggle="collapse"
++                                    data-parent="#portal_accordion"
++                                    href="#CollapseOne">latest featured articles</a>
+                             </div>
+                             <div id="CollapseOne" class="accordion-body collapse in">
+                                 <div class="accordion-inner">
+diff --git c_portal/templates/portal/subs/articles.django c_portal/templates/portal/subs/articles.django
+index 017092b..5b64baa 100644
+--- c_portal/templates/portal/subs/articles.django
++++ c_portal/templates/portal/subs/articles.django
+@@ -1,11 +1,3 @@
+-<div class="pull-right well span4">
+-	<strong>latest comments:</strong><br>
+-	{% for comment in comments %}
+-	<a href="/members/{{comment.user}}/">{{comment.name}}</a>: {{comment.comment}}
+-	{% empty %}
+-	no comments, so far...
+-	{% endfor %}
+-</div>
+ {% for a in featured %}
+ <blockquote><a href="/articles/{{a.id}}/">{{a.title}}</a></h2>
+ <small>{{a.abstract}} <a href="/articles/{{a.id}}/">weiterlesen...</a></small>
+diff --git c_portal/templates/portal/subs/comments.django c_portal/templates/portal/subs/comments.django
+new file mode 100644
+index 0000000..35a487e
+--- /dev/null
++++ c_portal/templates/portal/subs/comments.django
+@@ -0,0 +1,6 @@
++{% for comment in comments %}
++<a href="{{comment.content_object.get_my_url}}"><i class="icon-bookmark"></i></a>
++<a href="/members/{{comment.user}}/">{{comment.name}}</a>: {{comment.comment}}<br>
++{% empty %}
++no comments, so far...
++{% endfor %}
+diff --git c_portal/views.py c_portal/views.py
+index 3303c6b..bae8b8c 100644
+--- c_portal/views.py
++++ c_portal/views.py
+@@ -17,7 +17,7 @@ def portal_area(request):
+ 	projects = Project.objects.all()
+ 	featured = Article.objects.published().filter(
+ 			featured=True,
+-			).order_by('-pub_date')[:10]
++			).order_by('-pub_date')[:8]
+ 	tags = sorted(Tag.objects.all(), key=lambda x: x.popularity, reverse=True)
+ 	latest_projects = Project.objects.all().order_by('-pk')[:8]
+ 	comments = Comment.objects.all().order_by('-id')[:5]
+@@ -37,7 +37,7 @@ def member_area(request, nickname):
+ 				member.aboutme = aboutme
+ 				member.save()
+ 				return HttpResponse()
+-	my_projects = member.project_set.all()
++	my_projects = sorted(member.project_set.all(), key=lambda x: x.get_latest_tick, reverse=True)
+ 	my_articles = Article.objects.published().filter(
+ 			author=member).order_by('-pub_date')
+ 	my_featured = my_articles.filter(featured=True)
+diff --git polls/templates/comments.django polls/templates/comments.django
+new file mode 100644
+index 0000000..80737d5
+--- /dev/null
++++ polls/templates/comments.django
+@@ -0,0 +1,30 @@
++{% load comments %}
++
++{% if request.user.is_authenticated %}
++	<div class="row">
++		<div class="span8">
++			<div class="pull-right">
++				{% get_comment_form for poll as form %}
++				<form action="{% comment_form_target %}" method="post">
++					{% csrf_token %}<br>
++					<input id="id_comment" name="comment"><br>
++					<input type="text" name="honeypot" id="id_honeypot" />
++					{{ form.content_type }}
++					{{ form.object_pk }}
++					{{ form.timestamp }}
++					{{ form.security_hash }}
++					<input type="hidden" name="next" value="{{request.path}}">
++					<input type="submit" name="submit" value="comment" class="btn btn-block">
++				</form>
++			</div>
++			<strong>comments:</strong><br>
++			{% get_comment_list for poll as comment_list %}
++			{% for comment in comment_list %}
++			<strong>{{comment.name}}:</strong> {{comment.comment}}
++			<br>
++			{% empty %}
++				no comments, so far...
++			{% endfor %}
++		</div>
++	</div>
++{% endif %}

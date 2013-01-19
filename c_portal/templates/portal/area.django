@@ -17,7 +17,20 @@
                                 <a class="accordion-toggle btn btn-info"
                                     data-toggle="collapse"
                                     data-parent="#portal_accordion"
-                                    href="#CollapseOne">latest articles</a>
+                                    href="#CollapseZero">latest comments</a>
+                            </div>
+                            <div id="CollapseZero" class="accordion-body collapse">
+                                <div class="accordion-inner">
+                                    {% include "portal/subs/comments.django" %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle btn btn-info"
+                                    data-toggle="collapse"
+                                    data-parent="#portal_accordion"
+                                    href="#CollapseOne">latest featured articles</a>
                             </div>
                             <div id="CollapseOne" class="accordion-body collapse in">
                                 <div class="accordion-inner">

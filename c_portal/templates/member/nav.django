@@ -28,13 +28,14 @@
 <ul class="nav nav-list">
     <li class="nav-header">my active projects</li>
     {% for project in my_projects %}
-        <li>
-        <a href="/projects/{{project.name}}/">{{project.name}}</a>
-        </li>
+	<li>
+		<a href="/projects/{{project.name}}/">{{project.name}}</a>
+	</li>
     {% empty %}
         <li>no projects so far...</li>
     {% endfor %}
 </ul>
+
 <hr>
 
 {% if request.user.username == member.nickname %}

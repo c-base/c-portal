@@ -1,0 +1,30 @@
+{% load comments %}
+
+{% if request.user.is_authenticated %}
+	<div class="row">
+		<div class="span9">
+			<div class="pull-right">
+				{% get_comment_form for article as form %}
+				<form action="{% comment_form_target %}" method="post">
+					{% csrf_token %}<br>
+					<input id="id_comment" name="comment"><br>
+					<input type="text" name="honeypot" id="id_honeypot" /><br>
+					{{ form.content_type }}
+					{{ form.object_pk }}
+					{{ form.timestamp }}
+					{{ form.security_hash }}
+					<input type="hidden" name="next" value="{{request.path}}">
+					<input type="submit" name="submit" value="comment" class="btn btn-block">
+				</form>
+			</div>
+			<strong>comments:</strong><br>
+			{% get_comment_list for article as comment_list %}
+			{% for comment in comment_list %}
+			{{comment.name }}: {{comment.comment}}
+			<br>
+			{% empty %}
+				no comments, so far...
+			{% endfor %}
+		</div>
+	</div>
+{% endif %}
