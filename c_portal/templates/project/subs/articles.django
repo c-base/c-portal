@@ -1,0 +1,10 @@
+{% for article in my_articles %}
+<blockquote>
+    <a href="/articles/{{article.pk}}/">
+        <strong>{{article.title}}</strong><br>
+    </a>
+    <small>{{article.abstract}} <a href="/articles/{{article.id}}/">weiterlesen...</a></small>
+</blockquote>
+{% empty %}
+    nothing much going on here... please come back soon!
+{% endfor %}

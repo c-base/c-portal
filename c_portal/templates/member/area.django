@@ -48,31 +48,7 @@
                             </div>
                             <div id="CollapseOne" class="accordion-body collapse {%if not my_unpublished%}in{%endif%}">
                                 <div class="accordion-inner">
-                                    <table class="table table-condensed table-striped">
-                                        {% for article in my_articles %}
-                                        <tr>
-                                            <td>
-                                                <a href="/articles/{{article.pk}}/">
-                                                    <strong>{{article.title}}</strong><br>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="/articles/{{article.pk}}/">
-                                                    {{article.abstract}}
-                                                </a>
-                                            </td>
-                                            {% if request.user.username == article.author.nickname %}
-                                            <td class="span1">
-                                                <a href="/articles/{{article.pk}}/unpublish/">
-                                                    <i class="icon-filter icon-white" rel="tooltip" title="unpublish"></i>
-                                                </a>
-                                            </td>
-                                            {% endif %}
-                                        </tr>
-                                        {% empty %}
-                                        <tr><td>nothing much going on here... please come back soon!</td></tr>
-                                        {% endfor %}
-                                    </table>
+                                    {% include "member/subs/articles.django" %}
                                 </div>
                             </div>
                         </div>
@@ -86,19 +62,7 @@
                             </div>
                             <div id="CollapseTwo" class="accordion-body collapse {%if my_unpublished%}in{%endif%}">
                                 <div class="accordion-inner">
-                                    <table class="table table-condensed table-striped">
-                                        {% for a in my_unpublished %}
-                                        <tr>
-                                            <td><a href="/articles/{{a.id}}/"><strong>{{a}}</strong></a></td>
-                                            <td><a href="/articles/{{a.id}}/">{{a.abstract}}</a></td>
-                                            <td class="span1">
-                                                <a href="/articles/{{a.id}}/publish/">
-                                                    <i class="icon-ok icon-white"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                    </table>
+                                    {% include "member/subs/unpublished.django" %}
                                 </div>
                             </div>
                         </div>

@@ -33,24 +33,7 @@
                             </div>
                             <div id="CollapseOne" class="accordion-body collapse in">
                                 <div class="accordion-inner">
-                                    <table class="table table-condensed table-striped">
-                                    {% for article in my_articles %}
-                                        <tr>
-                                            <td>
-                                                <a href="/articles/{{article.pk}}/">
-                                                    <strong>{{article.title}}</strong><br>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="/articles/{{article.pk}}/">
-                                                    {{article.abstract}}
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    {% empty %}
-                                        <tr><td>nothing much going on here... please come back soon!</td></tr>
-                                    {% endfor %}
-                                    </table>
+                                    {% include "project/subs/articles.django" %}
                                 </div>
                             </div>
                         </div>

@@ -50,6 +50,17 @@
 <hr>
 
 {% if request.user.is_authenticated and is_project_member %}
+<form class="form" method="post" action="/article/create/">
+    <div class="control-group">
+        <div class="controls">
+            <div class="input-prepend">
+                <span class="add-on" rel="tooltip" title="add article"><i class="icon-file"></i></span>
+                <input id="id_title" type="text" name="title" maxlength="64" placeholder="add article"/>
+                {% csrf_token %}
+            </div>
+        </div>
+    </div>
+</form>
 <form class="form" method="post" action="/projects/{{project}}/add_tags/">
     <div class="control-group">
         <div class="controls">

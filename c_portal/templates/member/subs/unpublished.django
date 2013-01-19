@@ -1,0 +1,11 @@
+{% for a in my_unpublished %}
+<blockquote>
+    <div class="pull-right">
+        <a href="/articles/{{a.id}}/publish/">
+            <i class="icon-ok icon-white"></i>
+        </a>
+    </div>
+    <a href="/articles/{{a.id}}/"><strong>{{a}}</strong></a>
+    <small>{{a.abstract}}</small>
+</blockquote>
+{% endfor %}

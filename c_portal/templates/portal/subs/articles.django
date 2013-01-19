@@ -1,26 +1,6 @@
-    <table class="table table-condensed table-striped">
-        <thead>
-            <tr><th>latest articles</th></tr>
-        </thead>
-        <tbody>
-            {% for article in featured %}
-            <tr>
-                <td class="span3">
-                    <a href="/articles/{{article.pk}}/">
-                        <strong>
-                            {{article.title}}
-                        </strong>
-                    </a>
-                </td>
-                <td>
-                    <a href="/articles/{{article.pk}}/">
-                        {{article.abstract}}
-                    </a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr><td>nothing much going on here... please come back soon!</td></tr>
-            <hr>
-            {% endfor %}
-        </tbody>
-    </table>
+{% for a in featured %}
+<blockquote><a href="/articles/{{a.id}}/">{{a.title}}</a></h2>
+<small>{{a.abstract}} <a href="/articles/{{a.id}}/">weiterlesen...</a></small>
+</blockquote>
+{% empty %}
+{% endfor %}

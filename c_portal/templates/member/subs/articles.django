@@ -1,0 +1,17 @@
+{% for article in my_articles %}
+<blockquote>
+        {% if request.user.username == article.author.nickname %}
+        <div class="pull-right">
+            <a href="/articles/{{article.pk}}/unpublish/">
+                <i class="icon-filter icon-white" rel="tooltip" title="unpublish"></i>
+            </a>
+        </div>
+        {% endif %}
+        <a href="/articles/{{article.pk}}/">
+            <strong>{{article.title}}</strong><br>
+        </a>
+        <small>{{article.abstract}} <a href="/articles/{{article.id}}/">weiterlesen...</a></small>
+</blockquote>
+{% empty %}
+nothing much going on here... please come back soon!
+{% endfor %}
