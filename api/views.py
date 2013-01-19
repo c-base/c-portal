@@ -166,11 +166,16 @@ def list_members(request):
 			)
 
 @jsonrpc_method('api.list_projects')
-def list_projects(request):
+def list_projects(request, nickname=None):
+	if not nickname:
+		projects = Project.objects.all()
+	else:
+		member = get_object_or_404(Member, nickname=nickname)
+		projects = member.project_set.all()
 	return json.loads(
 			serializers.serialize(
 				'json',
-				Project.objects.all(),
+				projects,
 				)
 			)
 
