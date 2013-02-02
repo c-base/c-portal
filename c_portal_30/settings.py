@@ -78,7 +78,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -88,7 +88,7 @@ SECRET_KEY = 'w6jm=$(v2ks2mpgp+)^h@73w#z3)i2zeo!2xl+w(8#rl2qr&amp;q='
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -123,30 +123,30 @@ AUTH_LDAP_CACHE_GROUPS = True
 AUTH_LDAP_GROUP_CACHE_TIMEOUT = 300
 AUTH_LDAP_MIRROR_GROUPS = True
 AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
-	"dc=c-base,dc=org",
-	ldap.SCOPE_SUBTREE,
-	"(objectClass=groupOfNames)",
+    "dc=c-base,dc=org",
+    ldap.SCOPE_SUBTREE,
+    "(objectClass=groupOfNames)",
 )
 AUTH_LDAP_REQUIRE_GROUP = "cn=crew,ou=groups,dc=c-base,dc=org"
 AUTH_LDAP_GROUP_TYPE = GroupOfNamesType(name_attr="cn")
 AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-	"is_member": "cn=crew,ou=groups,dc=c-base,dc=org",
-	"is_circle_member": "cn=circle,ou=groups,dc=c-base,dc=org",
+    "is_member": "cn=crew,ou=groups,dc=c-base,dc=org",
+    "is_circle_member": "cn=circle,ou=groups,dc=c-base,dc=org",
 }
 
 AUTHENTICATION_BACKENDS = (
-		'django_auth_ldap.backend.LDAPBackend',
-		'django.contrib.auth.backends.ModelBackend',
-		)
+    'django_auth_ldap.backend.LDAPBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 #if DEBUG:
-#	import logging, logging.handlers
-#	logfile = "/tmp/django-ldap-debug.log"
-#	my_logger = logging.getLogger('django_auth_ldap')
-#	my_logger.setLevel(logging.DEBUG)
-#	handler = logging.handlers.RotatingFileHandler(
-#	logfile, maxBytes=1024 * 500, backupCount=5)
-#	my_logger.addHandler(handler)
+#   import logging, logging.handlers
+#   logfile = "/tmp/django-ldap-debug.log"
+#   my_logger = logging.getLogger('django_auth_ldap')
+#   my_logger.setLevel(logging.DEBUG)
+#   handler = logging.handlers.RotatingFileHandler(
+#   logfile, maxBytes=1024 * 500, backupCount=5)
+#   my_logger.addHandler(handler)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -157,15 +157,15 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-	'django.contrib.markup',
-	'django.contrib.comments',
-	'south',
-	'jsonrpc',
-	'account',
-	'c_portal',
-	'api',
-	'polls',
-	'shoutbox',
+    'django.contrib.markup',
+    'django.contrib.comments',
+    'south',
+    'jsonrpc',
+    'account',
+    'c_portal',
+    'api',
+    'polls',
+    'shoutbox',
 )
 
 # A sample logging configuration. The only tangible logging
