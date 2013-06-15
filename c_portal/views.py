@@ -52,14 +52,17 @@ def member_area(request, nickname):
 		addtag_form = AddTagForm()
 		joinproject_form = JoinProjectForm()
 		aboutme_form = AboutmeForm(instance=member)
-		poll = Poll.objects.get(pk=1)
-		has_voted = member.nickname in [
-				u.username for u in poll.participants.all()]
-		total_votes = sum([c.votes for c in poll.choice_set.all()])
-		progressbars = []
-		for choice in poll.choice_set.all():
-			progressbars.append(ProgressBar(
-				choice.choice, total_votes, choice.votes))
+        try:
+            poll = Poll.objects.get(pk=1)
+            has_voted = member.nickname in [
+                    u.username for u in poll.participants.all()]
+            total_votes = sum([c.votes for c in poll.choice_set.all()])
+            progressbars = []
+            for choice in poll.choice_set.all():
+                progressbars.append(ProgressBar(
+                    choice.choice, total_votes, choice.votes))
+        except:
+            poll = None
 	return render_to_response(
 			'member/area.django', RequestContext(request, locals()))
 
